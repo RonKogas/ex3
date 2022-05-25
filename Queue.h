@@ -13,20 +13,53 @@ private:
     Node <T> *m_lastNode;
     int m_size;
 public:
+    //no arguments c'tor
     Queue();
+
+    //copy c'tor
     Queue(const Queue&);
+
+    //assign right operand to left operand
     Queue<T>& operator=(const Queue<T>&);
+    
+    //d'tor
     ~Queue();
+
+    //push object t to the tale of the queue
     void pushBack(const T t);
+
+    //return the front element of the queue
     T& front();
+
+    //pop out the front element of the queue,
+    //(but not retuurning him)
     void popFront();
+
+    //return how much elements in the queue
     int size() const;
+    
+    //iterator for non-const queues
+    //(can change the data)
     class Iterator;
+    
+    //iterator for const queue objects
+    //cannot change data
     class ConstIterator;
+
+    //return Iterator that points the first element
     Iterator begin() ;
+    
+    //return Iterator that points to nullptr
     Iterator end() ;
+
+    //return const Iterator that points the first element
     ConstIterator begin() const;
+
+    //return const Iterator that points to nullptr
     ConstIterator end() const;
+    
+    //exeption for illegal function on empty queue
+    //(popFront or front)
     class EmptyQueue{};
     
 };
@@ -42,8 +75,16 @@ m_firstNode(new Node <T>),
 m_lastNode(nullptr),
 m_size(0)
 {
-    m_firstNode->m_nextNode=nullptr;
-    m_lastNode=m_firstNode;
+    try
+    {
+        m_firstNode->m_nextNode=nullptr;
+        m_lastNode=m_firstNode;
+    }
+    catch(std::exception&)
+    {
+        delete m_firstNode;
+        throw;
+    }
 }
 
 template <class T>
@@ -52,11 +93,19 @@ m_firstNode(new Node <T>),
 m_lastNode(nullptr),
 m_size(0)
 {
-    m_firstNode->m_nextNode=nullptr;
-    m_lastNode=m_firstNode;
-    for(T element: queue)
+    try
     {
-        (*this).pushBack(element);
+           m_firstNode->m_nextNode=nullptr;
+        m_lastNode=m_firstNode;
+        for(T element: queue)
+        {
+            (*this).pushBack(element);
+        }
+    }
+    catch(std::exception&)
+    {
+        delete m_firstNode;
+        throw;
     }
 }
 
