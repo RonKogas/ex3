@@ -143,6 +143,7 @@ void Queue<T>::popFront()
             delete tmpNode;
         }
         m_size--;
+        return;
     }
     throw EmptyQueue();
 }
