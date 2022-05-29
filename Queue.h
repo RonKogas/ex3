@@ -29,7 +29,7 @@ public:
     void pushBack(const T t);
 
     //return the front element of the queue
-    T& front();
+    T& front() const;
 
     //pop out the front element of the queue,
     //(but not retuurning him)
@@ -168,7 +168,7 @@ void Queue<T>::pushBack(const T t)
 }
 
 template <class T>
-T& Queue<T>::front()
+T& Queue<T>::front() const
 {
     if(m_size>0)
     {
