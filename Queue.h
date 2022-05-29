@@ -379,7 +379,7 @@ typename Queue<T>::ConstIterator Queue<T>::ConstIterator::operator++(int)
     {
         throw InvalidOperation();
     }
-    Iterator result = *this;
+    ConstIterator result = *this;
     ++(*this);
     return result;
 }
