@@ -1,4 +1,5 @@
 #include "iostream"
+//Node for linked list implementation
 template <class T>
 struct Node{
     T m_data;
@@ -116,6 +117,18 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& queue)
     {
         return *this;
     }
+    Queue<T> q1;
+    try
+    {
+        for(T element: queue)
+        {
+            q1.pushBack(element);
+        }   
+    }
+    catch(const std::exception& e)
+    {
+        throw;
+    }
     Node<T> *previousNode=m_firstNode;
     Node<T> *nextNode=m_firstNode;
     while(nextNode)
@@ -129,7 +142,7 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& queue)
     m_size=0;
     m_firstNode->m_nextNode=m_lastNode;
     m_lastNode=m_firstNode;
-    for(T element: queue)
+    for(T element: q1)
     {
         this->pushBack(element);
     }
@@ -252,19 +265,34 @@ Queue<T> filter(const Queue<T> queue,Condition c)
 template <class T>
 class Queue<T>::Iterator
 {
+private:
     Queue<T> *m_queue;
     Node<T> *m_currentNode;
     Iterator(Queue<T>* queue, Node<T> *currentNode);
     friend class Queue<T>;
 public:
-    //~Iterator();
+    //advance the iterator with 1
     Iterator& operator++();
     Iterator operator++(int);
+    
+    //return the object this speific Iterator "points" to
     T& operator*() const; 
+    
+    //compare two Iterators. Iterators are equal if they have pointers to the same 
+    //Nodes in same Queues
     bool operator!=(const Iterator& iterator) const;
     bool operator==(const Iterator& iterator) const;
+    
+    //copy c'tor (defaultive)
     Iterator(const Iterator&) = default;
+
+    //assighment operator (defaultive)
     Iterator& operator=(const Iterator&) = default; 
+
+    //d'tor (defaultive)
+    ~Iterator() = default;
+
+    //exception, thrown if Iterators from different Queues compared
     class InvalidOperation{};
 };
 
@@ -339,19 +367,30 @@ bool Queue<T>::Iterator::operator==(const Iterator& iterator) const
 template <class T>
 class Queue<T>::ConstIterator
 {
+private:
     const Queue<T> *m_queue;
     Node<T> *m_currentNode;
     ConstIterator(const Queue<T>* queue, Node<T> *currentNode);
     friend class Queue<T>;
 public:
-    //~Iterator();
+    //advance the iterator with 1
     ConstIterator& operator++();
     ConstIterator operator++(int);
+
+    //return the object this speific Iterator "points" to
     const T& operator*() const; 
+    //compare two Iterators, two operators are equal if they have pointers
+    //to the same Nodes and the same Queues
     bool operator!=(const ConstIterator& iterator) const;
     bool operator==(const ConstIterator& iterator) const;
+    
+    //copy c'tor (defaultive)
     ConstIterator(const ConstIterator&) = default;
+    
+    //assighment operator(defaultive)
     ConstIterator& operator=(const ConstIterator&) = default; 
+    
+    //exception, thrown if Iterators with different Queues compared 
     class InvalidOperation{};
 };
 
