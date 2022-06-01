@@ -27,7 +27,7 @@ public:
     ~Queue();
 
     //push object t to the tale of the queue
-    void pushBack(const T t);
+    void pushBack(const T& t);
 
     //return the front element of the queue
     T& front() const;
@@ -65,7 +65,7 @@ public:
     
 };
 template <class T, class Condition>
-Queue<T> filter(const Queue<T> queue,Condition c);
+Queue<T> filter(const Queue<T>& queue,Condition c);
 
 template <class T, class Transformation>
 void transform(Queue<T>& queue,Transformation t);
@@ -163,7 +163,7 @@ Queue<T>::~Queue()
 }
 
 template <class T>
-void Queue<T>::pushBack(const T t)
+void Queue<T>::pushBack(const T& t)
 {
     if(m_size==0)
     {
@@ -249,7 +249,7 @@ typename Queue<T>::ConstIterator Queue<T>::end () const
 }
 
 template <class T,class Condition>
-Queue<T> filter(const Queue<T> queue,Condition c)
+Queue<T> filter(const Queue<T>& queue,Condition c)
 {
     Queue<T> result;
     for (T element:queue)
